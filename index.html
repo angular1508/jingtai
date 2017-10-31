@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>升序降序排列</title>
+    <style>
+        table{
+            width:450px;
+            text-align:center;
+            border-collapse: collapse;
+        }
+        table tr{
+            border-bottom:1px solid #ccc;
+        }
+        table tr th,td{
+            height:30px;
+        }
+        table th{
+            position: relative;
+        }
+        table th::after{
+            position:absolute;
+            left:80%;
+            top:50%;
+            margin-top:-2px;
+            content:"";
+            width:0;
+            height:0;
+            border:5px solid transparent;
+            border-top:5px solid #333;
+        }
+    </style>
+</head>
+<body ng-app="orderBy" ng-controller="order">
+<div>
+    <p>
+        <input ng-input="" type="text" ng-model="tiaojian">
+        <button ng-click="search()">搜索</button>
+    </p>
+    <table >
+        <thead>
+            <tr>
+                <th ng-click="order1('num')">产品编号</th>
+                <th ng-click="order1('name')">产品名称</th>
+                <th ng-click="order1('price')">产品价钱</th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr ng-repeat="index in arr | orderBy:order2:flag  ">
+                <td>{{index.num}}</td>
+                <td>{{index.name}}</td>
+                <td>{{index.price}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="angular.min.js"></script>
+<script src="jquery1.7.js"></script>
+<script>
+    var app = angular.module("orderBy",[]);
+    app.controller('order',function($scope){
+        $scope.arr1=[
+            {
+                num:6661,
+                name:'iphone3',
+                price:"(rmb)4,000.00"
+            },
+            {
+                num:5661,
+                name:'iphone4',
+                price:"(rmb)5,000.00"
+            },
+            {
+                num:5551,
+                name:'ipho@ne2',
+                price:"(rmb)1,000.00"
+            },
+            {
+                num:4444,
+                name:'ipho@ne1',
+                price:"(rmb)2,000.00"
+            },
+            {
+                num:3333,
+                name:'ipho@ne',
+                price:"(rmb)1,000.00"
+            },
+			{
+                num:6661,
+                name:'iphone3',
+                price:"(rmb)4,000.00"
+            },
+            {
+                num:5661,
+                name:'ipho@ne4',
+                price:"(rmb)5,000.00"
+            },
+            {
+                num:5551,
+                name:'iphone2',
+                price:"(rmb)1,000.00"
+            },
+            {
+                num:4444,
+                name:'iphone1',
+                price:"(rmb)2,000.00"
+            },
+            {
+                num:3333,
+                name:'iph@one',
+                price:"(rmb)1,000.00"
+            }
+        ]
+		$scope.arr = [];
+		$scope.flag = false;
+		$scope.ziduan = ""
+		$scope.tiaojian = "@";
+        $scope.order1=function (th) {
+		   $scope.ziduan=th;
+		   
+           if($scope.flag){
+		       $scope.flag=false;
+		   }else{
+		     $scope.flag=true;
+		   }
+		   
+        }
+		$scope.order2 = function(obj){
+		     return obj[$scope.ziduan]
+		}
+		$scope.search = function(){
+		     $scope.arr = [];
+		     for(var i = 0;i<$scope.arr1.length;i++){
+			    if($scope.arr1[i]['name'].indexOf($scope.tiaojian)!=-1){
+				   $scope.arr.push($scope.arr1[i]);
+				}
+			 }
+		}
+		$scope.search2 = function(str){
+		   $scope.arr.push({
+                num:3333,
+                name:'iph@one',
+                price:"(rmb)1,000.00"
+            });
+		   return  str.indexOf($scope.tiaojian) !=-1;
+		   
+		}
+    })
+</script>
+</body>
+</html>
